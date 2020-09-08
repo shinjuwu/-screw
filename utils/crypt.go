@@ -4,11 +4,7 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
-	"crypto/hmac"
-	"crypto/sha1"
-	"crypto/sha256"
 	"encoding/base64"
-	"encoding/hex"
 	"fmt"
 )
 
@@ -71,18 +67,4 @@ func PKCS7UnPadding(origData []byte) []byte {
 	length := len(origData)
 	unpadding := int(origData[length-1])
 	return origData[:(length - unpadding)]
-}
-
-func SignSHA1(orig string) []byte {
-	h := sha1.New()
-	h.Write([]byte(orig))
-	bs := h.Sum(nil)
-	return bs
-}
-
-func HmacSha256(oring string, key string) string {
-	h := hmac.New(sha256.New, []byte(key))
-	h.Write([]byte(oring))
-	sha := hex.EncodeToString(h.Sum(nil))
-	return sha
 }
